@@ -1,13 +1,13 @@
 from dao.db_config  import get_connection 
 
-class CursoDAO: 
+class TeacherDAO: 
 
-    sqlSelect = 'SELECT id, nome_curso, duracao FROM curso'
+    sqlSelect = 'SELECT id, nome, disciplina FROM professor'
 
-    def listar(self): 
+    def get_all(self): 
         conn = get_connection() 
         cursor = conn.cursor() 
         cursor.execute(self.sqlSelect) 
-        lista = cursor.fetchall() 
+        rows = cursor.fetchall() 
         conn.close() 
-        return lista
+        return rows

@@ -1,8 +1,8 @@
 from flask import Flask, render_template
-from dao.aluno_dao import AlunoDAO
-from dao.professor_dao import ProfessorDAO
-from dao.curso_dao import CursoDAO
-from dao.turma_dao import TurmaDAO
+from dao.student_dao import StudentDAO
+from dao.teacher_dao import TeacherDAO
+from dao.course_dao import CourseDAO
+from dao.class_dao import ClassDAO
 
 app = Flask(__name__)
 
@@ -10,29 +10,29 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route('/aluno') 
-def listar_aluno(): 
-    dao = AlunoDAO() 
-    lista = dao.listar()
-    return render_template('aluno/listar_aluno.html', lista=lista)
+@app.route('/student') 
+def list_student(): 
+    dao = StudentDAO() 
+    list = dao.get_all()
+    return render_template('student/list_student.html', list=list)
 
-@app.route('/professor') 
-def listar_professor(): 
-    dao = ProfessorDAO() 
-    lista = dao.listar()
-    return render_template('professor/listar_professor.html', lista=lista)
+@app.route('/teacher') 
+def list_teacher(): 
+    dao = TeacherDAO() 
+    list = dao.get_all()
+    return render_template('teacher/list_teacher.html', list=list)
 
-@app.route('/curso') 
-def listar_curso(): 
-    dao = CursoDAO() 
-    lista = dao.listar()
-    return render_template('curso/listar_curso.html', lista=lista)
+@app.route('/course') 
+def list_course(): 
+    dao = CourseDAO() 
+    list = dao.get_all()
+    return render_template('course/list_course.html', list=list)
 
-@app.route('/turma') 
-def listar_turma(): 
-    dao = TurmaDAO() 
-    lista = dao.listar()
-    return render_template('turma/listar_turma.html', lista=lista)
+@app.route('/class') 
+def list_class(): 
+    dao = ClassDAO() 
+    list = dao.get_all()
+    return render_template('class/list_class.html', list=list)
 
 if __name__ == "__main__":
     app.run(debug=True)

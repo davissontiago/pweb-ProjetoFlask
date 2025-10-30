@@ -1,31 +1,28 @@
-{% include 'cabecalho.html' %}
+{% set page_title = 'Lista Professores' %}
+{% include 'includes/base_head.html' %} 
+{% include 'includes/navbar.html' %}
 
-
-<h1 class="mb-4">Lista de Alunos</h1>
+<h1 class="mb-4">Lista de Professores</h1>
 
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
         <tr>
             <th>ID</th>
             <th>Nome</th>
-            <th>Idade</th>
-            <th>Cidade</th>
+            <th>Disciplina</th>
             <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-        {% for item in lista %}
+        {% for item in list %}
         <tr>
             <td>{{ item[0] }}</td>
             <td>{{ item[1] }}</td>
             <td>{{ item[2] }}</td>
-            <td>{{ item[3] }}</td>
             <td></td>
         </tr>
         {% endfor %}
     </tbody>
     </table>
     
-
-
-{% include 'rodape.html' %}
+{% include 'includes/footer.html' %}
