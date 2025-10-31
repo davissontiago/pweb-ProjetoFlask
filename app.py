@@ -10,29 +10,29 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route('/student') 
-def list_student(): 
+@app.route('/students') 
+def list_students(): 
     dao = StudentDAO() 
-    lista = dao.get_all()
-    return render_template('student/list_student.html', lista=lista)
+    data = dao.get_all()
+    return render_template('students/students.html', data=data)
 
-@app.route('/teacher') 
-def list_teacher(): 
+@app.route('/teachers') 
+def list_teachers(): 
     dao = TeacherDAO() 
-    lista = dao.get_all()
-    return render_template('teacher/list_teacher.html', lista=lista)
+    data = dao.get_all()
+    return render_template('teachers/teachers.html', data=data)
 
-@app.route('/course') 
-def list_course(): 
+@app.route('/courses') 
+def list_courses(): 
     dao = CourseDAO() 
-    lista = dao.get_all()
-    return render_template('course/list_course.html', lista=lista)
+    data = dao.get_all()
+    return render_template('courses/courses.html', data=data)
 
-@app.route('/class') 
-def list_class(): 
+@app.route('/classes') 
+def list_classes(): 
     dao = ClassDAO() 
-    lista = dao.get_all()
-    return render_template('class/list_class.html', lista=lista)
+    data = dao.get_all()
+    return render_template('classes/classes.html', data=data)
 
 if __name__ == "__main__":
     app.run(debug=True)
