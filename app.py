@@ -13,26 +13,26 @@ def home():
 @app.route('/student') 
 def list_student(): 
     dao = StudentDAO() 
-    list = dao.get_all()
-    return render_template('student/list_student.html', list=list)
+    lista = dao.get_all()
+    return render_template('student/list_student.html', lista=lista)
 
 @app.route('/teacher') 
 def list_teacher(): 
     dao = TeacherDAO() 
-    list = dao.get_all()
-    return render_template('teacher/list_teacher.html', list=list)
+    lista = dao.get_all()
+    return render_template('teacher/list_teacher.html', lista=lista)
 
 @app.route('/course') 
 def list_course(): 
     dao = CourseDAO() 
-    list = dao.get_all()
-    return render_template('course/list_course.html', list=list)
+    lista = dao.get_all()
+    return render_template('course/list_course.html', lista=lista)
 
 @app.route('/class') 
 def list_class(): 
     dao = ClassDAO() 
-    list = dao.get_all()
-    return render_template('class/list_class.html', list=list)
+    lista = dao.get_all()
+    return render_template('class/list_class.html', lista=lista)
 
 if __name__ == "__main__":
     app.run(debug=True)
