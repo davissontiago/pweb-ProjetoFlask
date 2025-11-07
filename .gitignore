@@ -1,2 +1,3 @@
 venv
 dao/__pycache__
+.env
