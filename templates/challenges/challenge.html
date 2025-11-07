@@ -1,0 +1,19 @@
+{% set page_title = 'Desafio' %}
+{% include 'includes/base_head.html' %} 
+{% include 'includes/navbar.html' %}
+
+<form class="mb-3" action="/registration" method="POST">
+    <label class="form-label"><h4>Nome</h4></label> <br>
+    <input class="form-control" type="text" name="name" placeholder="nome"> <br>
+    <label class="form-label"><h4>Data de Nascimento</h4></label> <br>
+    <input class="form-control" type="date" name="birth_date"><br>
+    <label class="form-label"><h4>CPF</h4></label> <br>
+    <input class="form-control" type="string" name="cpf" placeholder="000.000.000-00"><br>
+    <label class="form-label"><h4>Nome da Mãe</h4></label> <br>
+    <input class="form-control" type="text" name="name_mother" placeholder="nome mãe"><br>
+    <button class="btn btn-primary" type="submit">Enviar</button> <br>
+</form>
+
+<h1 class="mb-4">{{value}}</h1>
+
+{% include 'includes/footer.html' %}

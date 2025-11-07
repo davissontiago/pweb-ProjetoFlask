@@ -1,0 +1,17 @@
+{% set page_title = 'Saudações' %}
+{% include 'includes/base_head.html' %} 
+{% include 'includes/navbar.html' %}
+
+<a href="/greetings1/Davisson" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Parâmetro de rota</a> <br><br>
+
+<a href="/greetings2/?name=Tiago" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Query String</a> <br><br>
+
+<form action="/login" method="POST">
+    <input type="text" name="user" placeholder="login"> <br><br>
+    <input type="password" name="password" placeholder="senha"> <br><br>
+    <button type="submit">Enviar</button> <br><br>
+</form>
+
+<h1 class="mb-4">{{value}}</h1>
+
+{% include 'includes/footer.html' %}
