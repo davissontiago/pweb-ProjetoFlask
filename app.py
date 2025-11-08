@@ -4,8 +4,10 @@ from dao.teacher_dao import TeacherDAO
 from dao.course_dao import CourseDAO
 from dao.class_dao import ClassDAO
 
+import os
+
 app = Flask(__name__)
-app.secret_key = "uma_chave_otima"
+app.secret_key = os.environ.get("SECRET_KEY")
 
 @app.route('/')
 def home():
@@ -26,12 +28,12 @@ def student_save(id=None):
     name = request.form['name']
     age = request.form['age']
     city = request.form['city']
-    dao = AlunoDAO()
+    dao = StudentDAO()
     result = dao.save(id, name, age, city)
 
 
     if result["status"] == "ok":
-        flash("Aluno salvo com sucesso!", "success")
+        flash("Registro salvo com sucesso!", "success")
     else:
         flash(result["mensagem"], "danger")
 

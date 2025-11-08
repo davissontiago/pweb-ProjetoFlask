@@ -12,10 +12,10 @@ class StudentDAO:
         conn.close() 
         return rows
     
-   def save(self, id, name, age, city):
+    def save(self, id, name, age, city):
         conn = get_connection()
         cursor = conn.cursor()
-        try:
+        try:            
             cursor.execute('INSERT INTO aluno (nome, idade, cidade) VALUES (%s, %s, %s)', (name, age, city))
             conn.commit()
             return {"status": "ok"}
