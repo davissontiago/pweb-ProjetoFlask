@@ -29,7 +29,7 @@ def student_save():
     age = request.form['age']
     city = request.form['city']
     dao = StudentDAO()
-    result = dao.save(id, name, age, city)
+    result = dao.save(name, age, city)
 
 
     if result["status"] == "ok":
