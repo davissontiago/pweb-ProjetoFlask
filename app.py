@@ -5,6 +5,7 @@ from dao.course_dao import CourseDAO
 from dao.class_dao import ClassDAO
 
 app = Flask(__name__)
+app.secret_key = "uma_chave_otima"
 
 @app.route('/')
 def home():
@@ -15,6 +16,28 @@ def list_students():
     dao = StudentDAO() 
     data = dao.get_all()
     return render_template('students/students.html', data=data)
+
+@app.route('/students/form')
+def form_aluno():
+    return render_template('students/form.html', aluno=None)
+
+@app.route('/student/save/', methods=['POST'])
+def student_save(id=None):
+    name = request.form['name']
+    age = request.form['age']
+    city = request.form['city']
+    dao = AlunoDAO()
+    result = dao.save(id, name, age, city)
+
+
+    if result["status"] == "ok":
+        flash("Aluno salvo com sucesso!", "success")
+    else:
+        flash(result["mensagem"], "danger")
+
+
+    return redirect('/students')
+
 
 @app.route('/teachers') 
 def list_teachers(): 
