@@ -23,8 +23,8 @@ def list_students():
 def form_aluno():
     return render_template('students/form.html', aluno=None)
 
-@app.route('/student/save/', methods=['POST'])
-def student_save(id=None):
+@app.route('/students/save/', methods=['POST'])
+def student_save():
     name = request.form['name']
     age = request.form['age']
     city = request.form['city']
