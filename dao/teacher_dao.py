@@ -11,3 +11,15 @@ class TeacherDAO:
         rows = cursor.fetchall() 
         conn.close() 
         return rows
+    
+    def save(self, name, subject, id=None):
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:            
+            cursor.execute('INSERT INTO professor (nome, disciplina) VALUES (%s, %s)', (name, subject))
+            conn.commit()
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "erro", "mensagem": f"Erro: {str(e)}"}
+        finally:
+            conn.close()

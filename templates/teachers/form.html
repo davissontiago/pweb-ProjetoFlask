@@ -1,0 +1,35 @@
+{% set page_title = 'Cadastro Professores' %}
+{% include 'includes/base_head.html' %} 
+{% include 'includes/navbar.html' %}
+
+<!-- Formulário de Professor -->
+<h1 class="mb-4">Cadastrar Professor</h1>
+
+
+<div class="row">
+    <div class="col-12">
+      <form action="/teachers/save/" method="POST">
+  
+        <!-- Nome -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Nome</label>
+          <input type="text" class="form-control" id="name" name="name" value="{{ teacher[1] if teacher else ''}}" required>
+        </div>
+  
+        <!-- Disciplina -->
+        <div class="mb-3">
+          <label for="subject" class="form-label">Disciplina</label>
+          <input type="text" class="form-control" id="subject" name="subject" value="{{ teacher[2] if teacher else ''}}" required>
+        </div>
+  
+        <!-- Botões -->
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+          <a href="/teachers" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+    </div>
+  </div>
+
+
+{% include 'includes/footer.html' %}

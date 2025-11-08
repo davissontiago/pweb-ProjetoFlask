@@ -13,6 +13,8 @@ app.secret_key = os.environ.get("SECRET_KEY")
 def home():
     return render_template('index.html')
 
+# =========================================== Aluno ===========================================
+
 @app.route('/students') 
 def list_students(): 
     dao = StudentDAO() 
@@ -31,15 +33,14 @@ def student_save():
     dao = StudentDAO()
     result = dao.save(name, age, city)
 
-
     if result["status"] == "ok":
         flash("Registro salvo com sucesso!", "success")
     else:
         flash(result["mensagem"], "danger")
 
-
     return redirect('/students')
 
+# =========================================== Professor ===========================================
 
 @app.route('/teachers') 
 def list_teachers(): 
@@ -47,17 +48,60 @@ def list_teachers():
     data = dao.get_all()
     return render_template('teachers/teachers.html', data=data)
 
+
+@app.route('/teachers/form')
+def form_teacher():
+    return render_template('teachers/form.html', teacher=None)
+
+@app.route('/teachers/save/', methods=['POST'])
+def teacher_save():
+    name = request.form['name']
+    subject = request.form['subject']
+    dao = TeacherDAO()
+    result = dao.save(name, subject)
+
+    if result["status"] == "ok":
+        flash("Registro salvo com sucesso!", "success")
+    else:
+        flash(result["mensagem"], "danger")
+
+    return redirect('/teachers')
+
+# =========================================== Curso ===========================================
+
 @app.route('/courses') 
 def list_courses(): 
     dao = CourseDAO() 
     data = dao.get_all()
     return render_template('courses/courses.html', data=data)
 
+@app.route('/courses/form')
+def form_course():
+    return render_template('courses/form.html', course=None)
+
+@app.route('/courses/save/', methods=['POST'])
+def course_save():
+    name_course = request.form['name_course']
+    duration = request.form['duration']
+    dao = CourseDAO()
+    result = dao.save(name_course, duration)
+
+    if result["status"] == "ok":
+        flash("Registro salvo com sucesso!", "success")
+    else:
+        flash(result["mensagem"], "danger")
+
+    return redirect('/courses')
+
+# =========================================== Turma ===========================================
+
 @app.route('/classes') 
 def list_classes(): 
     dao = ClassDAO() 
     data = dao.get_all()
     return render_template('classes/classes.html', data=data)
+
+# =========================================== Saudação ===========================================
 
 @app.route('/greetings')
 def greetings():
@@ -78,6 +122,8 @@ def login():
     password = request.form['password']
     data = f"Usuário: {user} | Senha: {password}"
     return render_template('greetings/greetings.html', value=data)
+
+# =========================================== Desafios ===========================================
 
 @app.route('/challenge')
 def challeng():
