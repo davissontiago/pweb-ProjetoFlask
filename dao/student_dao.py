@@ -11,3 +11,15 @@ class StudentDAO:
         rows = cursor.fetchall() 
         conn.close() 
         return rows
+    
+    def save(self, name, age, city, id=None):
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:            
+            cursor.execute('INSERT INTO aluno (nome, idade, cidade) VALUES (%s, %s, %s)', (name, age, city))
+            conn.commit()
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "erro", "mensagem": f"Erro: {str(e)}"}
+        finally:
+            conn.close()

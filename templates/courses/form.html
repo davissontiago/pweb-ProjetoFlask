@@ -1,0 +1,35 @@
+{% set page_title = 'Cadastro Curso' %}
+{% include 'includes/base_head.html' %} 
+{% include 'includes/navbar.html' %}
+
+<!-- Formulário de Curso -->
+<h1 class="mb-4">Cadastrar Curso</h1>
+
+
+<div class="row">
+    <div class="col-12">
+      <form action="/courses/save/" method="POST">
+  
+        <!-- Nome do Curso  -->
+        <div class="mb-3">
+          <label for="name_course" class="form-label">Nome do Curso</label>
+          <input type="text" class="form-control" id="name_course" name="name_course" value="{{ course[1] if course else ''}}" required>
+        </div>
+  
+        <!-- Duração -->
+        <div class="mb-3">
+          <label for="duration" class="form-label">Duração</label>
+          <input type="number" step="1" class="form-control" id="duration" name="duration" value="{{ course[2] if course else ''}}" required>
+        </div>
+  
+        <!-- Botões -->
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+          <a href="/courses" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+    </div>
+  </div>
+
+
+{% include 'includes/footer.html' %}

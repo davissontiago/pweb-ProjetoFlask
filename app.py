@@ -4,11 +4,16 @@ from dao.teacher_dao import TeacherDAO
 from dao.course_dao import CourseDAO
 from dao.class_dao import ClassDAO
 
+import os
+
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY")
 
 @app.route('/')
 def home():
     return render_template('index.html')
+
+# =========================================== Aluno ===========================================
 
 @app.route('/students') 
 def list_students(): 
@@ -16,11 +21,53 @@ def list_students():
     data = dao.get_all()
     return render_template('students/students.html', data=data)
 
+@app.route('/students/form')
+def form_aluno():
+    return render_template('students/form.html', aluno=None)
+
+@app.route('/students/save/', methods=['POST'])
+def student_save():
+    name = request.form['name']
+    age = request.form['age']
+    city = request.form['city']
+    dao = StudentDAO()
+    result = dao.save(name, age, city)
+
+    if result["status"] == "ok":
+        flash("Registro salvo com sucesso!", "success")
+    else:
+        flash(result["mensagem"], "danger")
+
+    return redirect('/students')
+
+# =========================================== Professor ===========================================
+
 @app.route('/teachers') 
 def list_teachers(): 
     dao = TeacherDAO() 
     data = dao.get_all()
     return render_template('teachers/teachers.html', data=data)
+
+
+@app.route('/teachers/form')
+def form_teacher():
+    return render_template('teachers/form.html', teacher=None)
+
+@app.route('/teachers/save/', methods=['POST'])
+def teacher_save():
+    name = request.form['name']
+    subject = request.form['subject']
+    dao = TeacherDAO()
+    result = dao.save(name, subject)
+
+    if result["status"] == "ok":
+        flash("Registro salvo com sucesso!", "success")
+    else:
+        flash(result["mensagem"], "danger")
+
+    return redirect('/teachers')
+
+# =========================================== Curso ===========================================
 
 @app.route('/courses') 
 def list_courses(): 
@@ -28,11 +75,33 @@ def list_courses():
     data = dao.get_all()
     return render_template('courses/courses.html', data=data)
 
+@app.route('/courses/form')
+def form_course():
+    return render_template('courses/form.html', course=None)
+
+@app.route('/courses/save/', methods=['POST'])
+def course_save():
+    name_course = request.form['name_course']
+    duration = request.form['duration']
+    dao = CourseDAO()
+    result = dao.save(name_course, duration)
+
+    if result["status"] == "ok":
+        flash("Registro salvo com sucesso!", "success")
+    else:
+        flash(result["mensagem"], "danger")
+
+    return redirect('/courses')
+
+# =========================================== Turma ===========================================
+
 @app.route('/classes') 
 def list_classes(): 
     dao = ClassDAO() 
     data = dao.get_all()
     return render_template('classes/classes.html', data=data)
+
+# =========================================== Saudação ===========================================
 
 @app.route('/greetings')
 def greetings():
@@ -53,6 +122,8 @@ def login():
     password = request.form['password']
     data = f"Usuário: {user} | Senha: {password}"
     return render_template('greetings/greetings.html', value=data)
+
+# =========================================== Desafios ===========================================
 
 @app.route('/challenge')
 def challeng():
