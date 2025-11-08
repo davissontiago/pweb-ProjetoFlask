@@ -12,7 +12,7 @@ class StudentDAO:
         conn.close() 
         return rows
     
-    def save(id=None, self, name, age, city):
+    def save(self, name, age, city, id=None):
         conn = get_connection()
         cursor = conn.cursor()
         try:            
