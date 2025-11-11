@@ -22,8 +22,8 @@ def list_students():
     return render_template('students/students.html', data=data)
 
 @app.route('/students/form')
-def form_aluno():
-    return render_template('students/form.html', aluno=None)
+def form_students():
+    return render_template('students/form.html', student=None)
 
 @app.route('/students/save/', methods=['POST'])
 def student_save():
