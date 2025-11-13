@@ -26,6 +26,7 @@ def form_students():
     return render_template('students/form.html', student=None)
 
 @app.route('/students/save/', methods=['POST'])
+@app.route('/students/save/<int:id>', methods=['POST'])
 def student_save():
     name = request.form['name']
     age = request.form['age']
@@ -39,6 +40,13 @@ def student_save():
         flash(result["mensagem"], "danger")
 
     return redirect('/students')
+
+@app.route('/students/edit/<int:id>')
+def student_edit(id):
+    dao = StudentDAO()
+    student = dao.get_by_id(id)
+    return render_template('students/form.html', student=student)
+    
 
 # =========================================== Professor ===========================================
 

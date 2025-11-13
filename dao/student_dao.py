@@ -23,3 +23,11 @@ class StudentDAO:
             return {"status": "erro", "mensagem": f"Erro: {str(e)}"}
         finally:
             conn.close()
+            
+    def get_by_id(self, id):
+        conn = get_connection() 
+        cursor = conn.cursor() 
+        cursor.execute('SELECT id, nome, idade, cidade FROM aluno WHERE id = %s', (id,))
+        record = cursor.fetchall()
+        conn.close()
+        return record
