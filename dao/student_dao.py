@@ -16,7 +16,10 @@ class StudentDAO:
         conn = get_connection()
         cursor = conn.cursor()
         try:            
-            cursor.execute('INSERT INTO aluno (nome, idade, cidade) VALUES (%s, %s, %s)', (name, age, city))
+            if id:
+                cursor.execute('UPDATE aluno SET nome = %s, idade =%s, cidade = %s WHERE id =%s', (name, age, city, id))
+            else:
+                cursor.execute('INSERT INTO aluno (nome, idade, cidade) VALUES (%s, %s, %s)', (name, age, city))
             conn.commit()
             return {"status": "ok"}
         except Exception as e:
@@ -28,6 +31,6 @@ class StudentDAO:
         conn = get_connection() 
         cursor = conn.cursor() 
         cursor.execute('SELECT id, nome, idade, cidade FROM aluno WHERE id = %s', (id,))
-        record = cursor.fetchall()
+        record = cursor.fetchone()
         conn.close()
         return record

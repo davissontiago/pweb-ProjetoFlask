@@ -8,24 +8,24 @@
 
 <div class="row">
     <div class="col-12">
-      <form action="/students/save/{{ item[0]}}" method="POST">
+      <form action="/students/save/{{ student[0]}}" method="POST">
   
         <!-- Nome -->
         <div class="mb-3">
           <label for="name" class="form-label">Nome</label>
-          <input type="text" class="form-control" id="name" name="name" value="{{ students[1] if students else ''}}" required>
+          <input type="text" class="form-control" id="name" name="name" value="{{ student[1] if students else ''}}" required>
         </div>
   
         <!-- Idade -->
         <div class="mb-3">
           <label for="age" class="form-label">Idade</label>
-          <input type="number" class="form-control" id="age" name="age" value="{{ students[2] if students else ''}}" required>
+          <input type="number" class="form-control" id="age" name="age" value="{{ student[2] if students else ''}}" required>
         </div>
   
         <!-- Cidade -->
         <div class="mb-3">
           <label for="city" class="form-label">Cidade</label>
-          <input type="text" class="form-control" id="city" name="city" value="{{ students[3] if students else ''}}" required>
+          <input type="text" class="form-control" id="city" name="city" value="{{ student[3] if students else ''}}" required>
         </div>
   
         <!-- Botões -->
