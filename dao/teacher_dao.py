@@ -2,7 +2,7 @@ from dao.db_config  import get_connection
 
 class TeacherDAO: 
 
-    sqlSelect = 'SELECT id, nome, disciplina FROM professor'
+    sqlSelect = 'SELECT id, nome, disciplina FROM professor ORDER BY id ASC'
 
     def get_all(self): 
         conn = get_connection() 

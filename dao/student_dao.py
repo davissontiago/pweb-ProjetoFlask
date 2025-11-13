@@ -2,7 +2,7 @@ from dao.db_config  import get_connection
 
 class StudentDAO: 
 
-    sqlSelect = 'SELECT id, nome, idade, cidade FROM aluno'
+    sqlSelect = 'SELECT id, nome, idade, cidade FROM aluno ORDER BY id ASC'
 
     def get_all(self): 
         conn = get_connection() 
@@ -34,3 +34,15 @@ class StudentDAO:
         record = cursor.fetchone()
         conn.close()
         return record
+    
+    def delete(self, id):
+        conn = get_connection() 
+        cursor = conn.cursor() 
+        try:
+            cursor.execute('DELETE FROM aluno WHERE id = %s', (id,))
+            conn.commit()
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "erro", "mensagem": f"Erro: {str(e)}"}
+        finally:
+            conn.close()

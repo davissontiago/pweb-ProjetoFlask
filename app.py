@@ -27,12 +27,12 @@ def form_students():
 
 @app.route('/students/save/', methods=['POST'])
 @app.route('/students/save/<int:id>', methods=['POST'])
-def student_save():
+def student_save(id=None):
     name = request.form['name']
     age = request.form['age']
     city = request.form['city']
     dao = StudentDAO()
-    result = dao.save(name, age, city)
+    result = dao.save(name, age, city, id)
 
     if result["status"] == "ok":
         flash("Registro salvo com sucesso!", "success")
@@ -46,7 +46,16 @@ def student_edit(id):
     dao = StudentDAO()
     student = dao.get_by_id(id)
     return render_template('students/form.html', student=student)
-    
+
+@app.route('/students/delete/<int:id>')
+def student_delete(id):
+    dao = StudentDAO()
+    result = dao.delete(id)
+    if result['status'] == "ok":
+       flash("Registro removido com sucesso!", "success") 
+    else:
+        flash(result["mensagem"], "danger")
+    return redirect('/students')
 
 # =========================================== Professor ===========================================
 
