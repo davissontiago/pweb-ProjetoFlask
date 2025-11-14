@@ -5,7 +5,7 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% for category, message in messages %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">                
+            <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">                
                 {{ message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
             </div>
@@ -36,7 +36,13 @@
             <td>{{ item[1] }}</td>
             <td>{{ item[2] }}</td>
             <td>{{ item[3] }}</td>
-            <td></td>
+            <td> 
+                <a href="/students/edit/{{item[0]}}" class="btn btn-primary btn-sm">Editar</a>
+                <a href="/students/delete/{{item[0]}}" class="btn btn-danger btn-sm"
+                    onclick="return confirm('Tem certeza que deseja remover este registro?');">
+                    Remover
+                </a>
+            </td>    
         </tr>
         {% endfor %}
     </tbody>
