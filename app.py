@@ -71,17 +71,34 @@ def form_teacher():
     return render_template('teachers/form.html', teacher=None)
 
 @app.route('/teachers/save/', methods=['POST'])
-def teacher_save():
+@app.route('/teachers/save/<int:id>', methods=['POST'])
+def teacher_save(id=None):
     name = request.form['name']
     subject = request.form['subject']
     dao = TeacherDAO()
-    result = dao.save(name, subject)
+    result = dao.save(name, subject, id)
 
     if result["status"] == "ok":
         flash("Registro salvo com sucesso!", "success")
     else:
         flash(result["mensagem"], "danger")
 
+    return redirect('/teachers')
+
+@app.route('/teachers/edit/<int:id>')
+def teacher_edit(id):
+    dao = TeacherDAO()
+    teacher = dao.get_by_id(id)
+    return render_template('teachers/form.html', teacher=teacher)
+
+@app.route('/teachers/delete/<int:id>')
+def teacher_delete(id):
+    dao = TeacherDAO()
+    result = dao.delete(id)
+    if result['status'] == "ok":
+       flash("Registro removido com sucesso!", "success") 
+    else:
+        flash(result["mensagem"], "danger")
     return redirect('/teachers')
 
 # =========================================== Curso ===========================================
@@ -97,17 +114,34 @@ def form_course():
     return render_template('courses/form.html', course=None)
 
 @app.route('/courses/save/', methods=['POST'])
-def course_save():
+@app.route('/courses/save/<int:id>', methods=['POST'])
+def course_save(id=None):
     name_course = request.form['name_course']
     duration = request.form['duration']
     dao = CourseDAO()
-    result = dao.save(name_course, duration)
+    result = dao.save(name_course, duration, id)
 
     if result["status"] == "ok":
         flash("Registro salvo com sucesso!", "success")
     else:
         flash(result["mensagem"], "danger")
 
+    return redirect('/courses')
+
+@app.route('/courses/edit/<int:id>')
+def course_edit(id):
+    dao = CourseDAO()
+    course = dao.get_by_id(id)
+    return render_template('courses/form.html', course=course)
+
+@app.route('/courses/delete/<int:id>')
+def course_delete(id):
+    dao = CourseDAO()
+    result = dao.delete(id)
+    if result['status'] == "ok":
+       flash("Registro removido com sucesso!", "success") 
+    else:
+        flash(result["mensagem"], "danger")
     return redirect('/courses')
 
 # =========================================== Turma ===========================================
@@ -117,6 +151,50 @@ def list_classes():
     dao = ClassDAO() 
     data = dao.get_all()
     return render_template('classes/classes.html', data=data)
+
+@app.route('/classes/form')
+def form_classe():
+    daoCourse = CourseDAO() 
+    dataCourse = daoCourse.get_all()
+    daoTeacher = TeacherDAO()
+    dataTeacher = daoTeacher.get_all()
+    return render_template('classes/form.html', class_value=None, dataCourse=dataCourse, dataTeacher=dataTeacher)
+
+@app.route('/classes/save/', methods=['POST'])
+@app.route('/classes/save/<int:id>', methods=['POST'])
+def classe_save(id=None):
+    semester = request.form['semester']
+    course_id = request.form['course_id']
+    teacher_id = request.form['teacher_id']
+    dao = ClassDAO()
+    result = dao.save(semester, course_id, teacher_id, id)
+
+    if result["status"] == "ok":
+        flash("Registro salvo com sucesso!", "success")
+    else:
+        flash(result["mensagem"], "danger")
+
+    return redirect('/classes')
+
+@app.route('/classes/edit/<int:id>')
+def classe_edit(id):
+    dao = ClassDAO()
+    class_value = dao.get_by_id(id)
+    daoCourse = CourseDAO() 
+    dataCourse = daoCourse.get_all()
+    daoTeacher = TeacherDAO()
+    dataTeacher = daoTeacher.get_all()
+    return render_template('classes/form.html', class_value=class_value, dataCourse=dataCourse, dataTeacher=dataTeacher)
+
+@app.route('/classes/delete/<int:id>')
+def classe_delete(id):
+    dao = ClassDAO()
+    result = dao.delete(id)
+    if result['status'] == "ok":
+       flash("Registro removido com sucesso!", "success") 
+    else:
+        flash(result["mensagem"], "danger")
+    return redirect('/classes')
 
 # =========================================== Saudação ===========================================
 

@@ -1,0 +1,59 @@
+{% set page_title = 'Cadastro Curso' %}
+{% include 'includes/base_head.html' %}
+{% include 'includes/navbar.html' %}
+
+<!-- Formulário de Turma -->
+<h1 class="mb-4">Cadastrar Curso</h1>
+
+
+<div class="row">
+    <div class="col-12">
+        <form action="/classes/save/{{ class_value[0]}}" method="POST">
+
+            <!-- Semestre  -->
+            <div class="mb-3">
+                <label for="semester" class="form-label">Semestre</label>
+                <input type="text" class="form-control" id="semester" name="semester"
+                    value="{{ class_value[1] if class_value else ''}}" required>
+            </div>
+
+            <!-- Curso -->
+            <div class="mb-3">
+                <label for="course_id" class="form-label">Curso</label>
+                <select class="form-select" id="course_id" name="course_id" required>
+
+                    <option value="">-- Selecione o Curso --</option>
+
+                    {% for item in dataCourse %}
+                    <option value="{{ item[0] }}" {% if item[0]==class_value[2] %} selected {% endif %}>
+                        {{ item[1] }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Professor -->
+            <div class="mb-3">
+                <label for="teacher_id" class="form-label">Professor</label>
+                <select class="form-select" id="teacher_id" name="teacher_id" required>
+
+                    <option value="">-- Selecione o Professor --</option>
+
+                    {% for item in dataTeacher %}
+                    <option value="{{ item[0] }}" {% if item[0]==class_value[3] %} selected {% endif %}>
+                        {{ item[1] }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+            <!-- Botões -->
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a href="/classes" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% include 'includes/footer.html' %}
