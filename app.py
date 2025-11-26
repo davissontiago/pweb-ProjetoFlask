@@ -3,6 +3,7 @@ from dao.student_dao import StudentDAO
 from dao.teacher_dao import TeacherDAO
 from dao.course_dao import CourseDAO
 from dao.class_dao import ClassDAO
+from dao.enrollment_dao import EnrollmentDAO
 
 import os
 
@@ -195,6 +196,68 @@ def classe_delete(id):
     else:
         flash(result["mensagem"], "danger")
     return redirect('/classes')
+
+# =========================================== Turma ===========================================
+
+@app.route('/enrollments') 
+def list_enrollments(): 
+    dao = EnrollmentDAO() 
+    data = dao.get_all()
+    return render_template('enrollments/enrollment.html', data=data)
+
+@app.route('/enrollments/form')
+def form_enrollment():
+    # 1. Carrega todos os Alunos para o dropdown
+    daoStudent = StudentDAO()
+    dataStudent = daoStudent.get_all()
+    
+    # 2. Carrega todas as Turmas para o dropdown
+    daoClass = ClassDAO()
+    dataClass = daoClass.get_all()
+    
+    return render_template('enrollments/form.html', enrollment_value=None, dataStudent=dataStudent, dataClass=dataClass)
+
+@app.route('/enrollments/save/', methods=['POST'])
+@app.route('/enrollments/save/<int:id>', methods=['POST'])
+def enrollment_save(id=None):
+    # Recebe os IDs selecionados nos menus suspensos
+    student_id = request.form['student_id']
+    class_id = request.form['class_id']
+    
+    dao = EnrollmentDAO()
+    result = dao.save(student_id, class_id, id)
+
+    if result["status"] == "ok":
+        flash("Matrícula salva com sucesso!", "success")
+    else:
+        flash(result["mensagem"], "danger")
+
+    return redirect('/enrollments')
+
+@app.route('/enrollments/edit/<int:id>')
+def enrollment_edit(id):
+    dao = EnrollmentDAO()
+    enrollment_value = dao.get_by_id(id) # Busca a matrícula específica
+    
+    # Carrega as listas novamente para preencher os dropdowns na edição
+    daoStudent = StudentDAO()
+    dataStudent = daoStudent.get_all()
+    
+    daoClass = ClassDAO()
+    dataClass = daoClass.get_all()
+    
+    return render_template('enrollments/form.html', enrollment_value=enrollment_value, dataStudent=dataStudent, dataClass=dataClass)
+
+@app.route('/enrollments/delete/<int:id>')
+def enrollment_delete(id):
+    dao = EnrollmentDAO()
+    result = dao.delete(id)
+    
+    if result['status'] == "ok":
+       flash("Matrícula removida com sucesso!", "success") 
+    else:
+        flash(result["mensagem"], "danger")
+    return redirect('/enrollments')
 
 # =========================================== Saudação ===========================================
 
