@@ -26,7 +26,8 @@
             <th>ID</th>
             <th>Semestre</th>
             <th>Curso</th>
-            <th>professor</th>
+            <th>Professor</th>
+            <th>Disciplina</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -37,6 +38,7 @@
             <td>{{ item[1] }}</td>
             <td>{{ item[2] }}</td>
             <td>{{ item[3] }}</td>
+            <td>{{ item[4] }}</td>
             <td>
                 <a href="/classes/edit/{{item[0]}}" class="btn btn-primary btn-sm">Editar</a>
                 <a href="/classes/delete/{{item[0]}}" class="btn btn-danger btn-sm"
